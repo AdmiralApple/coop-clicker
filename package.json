@@ -1,9 +1,8 @@
 {
   "name": "coop-clicker",
   "version": "1.0.0",
-  "description": "A simple cooperative clicker game that you can deploy to Vercel.",
   "scripts": {
-    "dev": "npx serve -s ."
+    "build": "echo 'No build required'"
   },
   "dependencies": {
     "@upstash/redis": "^1.22.2"
