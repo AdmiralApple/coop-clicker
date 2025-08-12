@@ -1,0 +1,78 @@
+diff --git a/main.js b/main.js
+index 8c8e3f1..f3b5e1e 100644
+--- a/main.js
++++ b/main.js
+@@ -1,6 +1,7 @@
+ // client side logic for the cooperative clicker
+ 
+ document.addEventListener('DOMContentLoaded', () => {
+   const counterEl = document.getElementById('counter');
++  let clickCount = 0;
+   const buttonEl = document.getElementById('click-btn');
+ 
+   /**
+@@ -12,6 +13,15 @@
+   async function incrementCount() {
+     try {
+       const response = await fetch('/api/counter', {
+         method: 'POST'
+       });
+       if (!response.ok) {
+         throw new Error('Failed to increment count');
+       }
+       const data = await response.json();
+       counterEl.textContent = data.count;
+     } catch (err) {
+       console.error(err);
+     }
+   }
+ 
++  function createConfetti() {
++    const confetti = document.createElement('div');
++    confetti.className = 'confetti';
++    document.body.appendChild(confetti);
++    setTimeout(() => confetti.remove(), 3000);
++  }
++
+   // Hook up button click to increment
+   buttonEl.addEventListener('click', () => {
+     incrementCount();
++    clickCount++;
++    if (clickCount % 100 === 0) {
++      createConfetti();
++    }
+   });
+ 
+   // Poll the server every second to update the count in case others have clicked
+   setInterval(fetchCount, 1000);
+ 
+   // Immediately fetch the count when the page loads
+   fetchCount();
+ });
+ 
+ // AI form handling logic
+ // AI form handling logic
+ (function(){
+diff --git a/style.css b/style.css
+new file mode 100644
+--- /dev/null
++++ b/style.css
+@@ -0,0 +1,5 @@
+ body {
++  overflow: hidden;
++}
++
++.confetti {
++  position: absolute;
++  width: 10px;
++  height: 10px;
++  background: red;
++  opacity: 0.8;
++  animation: fall 3s forwards;
++}
++
++@keyframes fall {
++  to {
++    transform: translateY(100vh) rotate(720deg);
++  }
++}
