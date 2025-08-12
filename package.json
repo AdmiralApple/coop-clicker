@@ -3,10 +3,15 @@
   "version": "1.0.0",
   "scripts": {
     "build": "echo 'No build required'",
-    "ai:local": "node scripts/ai-change.mjs"
+    "ai:local": "node scripts/ai-change.mjs",
+    "ai-change": "node ./scripts/ai-change.mjs"
   },
   "dependencies": {
-    "@upstash/redis": "^1.22.2",
-    "openai": "^4.58.0"
+    "@upstash/redis": "^1.35.3",
+    "openai": "^4.104.0"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=18"
   }
 }
