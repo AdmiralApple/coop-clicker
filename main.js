@@ -3,6 +3,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const counterEl = document.getElementById('counter');
   const buttonEl = document.getElementById('click-btn');
+  let clickCount = 0;
 
   /**
    * Fetch the current count from the serverless function.
@@ -38,9 +39,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function createConfetti() {
+    const colors = ['#FF0D72', '#0ABAB5', '#F9D423', '#FF4E50'];
+    const confetti = document.createElement('div');
+    confetti.classList.add('confetti');
+    confetti.style.position = 'absolute';
+    confetti.style.width = '10px';
+    confetti.style.height = '10px';
+    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.left = Math.random() * window.innerWidth + 'px';
+    confetti.style.top = Math.random() * window.innerHeight + 'px';
+    document.body.appendChild(confetti);
+    setTimeout(() => {
+      confetti.remove();
+    }, 3000);
+  }
+
   // Hook up button click to increment
   buttonEl.addEventListener('click', () => {
     incrementCount();
+    clickCount++;
+    if (clickCount >= 100) {
+      createConfetti();
+      clickCount = 0;
+    }
   });
 
   // Poll the server every second to update the count in case others have clicked
@@ -50,7 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchCount();
 });
 
-// AI form handling logic
 // AI form handling logic
 (function(){
   const form = document.getElementById('aiForm');
@@ -62,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     const prompt = (input.value || '').trim();
     if (!prompt) return;
-    status.textContent = 'Sending to AI…';
+    status.textContent = 'Sending to AIâ€¦';
     try {
       const r = await fetch('/api/dispatch-change', {
         method: 'POST',
