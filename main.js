@@ -49,3 +49,32 @@ document.addEventListener('DOMContentLoaded', () => {
   // Immediately fetch the count when the page loads
   fetchCount();
 });
+
+// AI form handling logic
+(function(){
+  const form = document.getElementById('aiForm');
+  if (!form) return;
+  const input = document.getElementById('aiPrompt');
+  const status = document.getElementById('aiStatus');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const prompt = (input.value || '').trim();
+    if (!prompt) return;
+    status.textContent = 'Sending to AI…';
+    try {
+      const r = await fetch('/api/dispatch-change', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-ai-secret': (window.__AI_SECRET || '')
+        },
+        body: JSON.stringify({ prompt, user: 'friend' })
+      });
+      if (!r.ok) throw new Error(await r.text());
+      status.textContent = 'Got it! A pull request will appear shortly.';
+      input.value = '';
+    } catch (err) {
+      status.textContent = 'Error sending prompt: ' + (err.message || err);
+    }
+  });
+})();

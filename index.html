@@ -1,60 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Co‑op Clicker Game</title>
-  <style>
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-      margin: 0;
-      background: #f7f7f7;
-    }
-    h1 {
-      margin-top: 40px;
-      margin-bottom: 20px;
-      color: #333;
-    }
-    #counter {
-      font-size: 2rem;
-      margin-bottom: 20px;
-      color: #0070f3;
-    }
-    #click-btn {
-      padding: 20px 40px;
-      font-size: 1.2rem;
-      background: #0070f3;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    #click-btn:hover {
-      background: #0059c1;
-    }
-    footer {
-      margin-top: auto;
-      padding: 20px;
-      text-align: center;
-      font-size: 0.8rem;
-      color: #666;
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Co‑op Clicker Game</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            background: #f7f7f7;
+        }
+
+        h1 {
+            margin-top: 40px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        #counter {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #0070f3;
+        }
+
+        #click-btn {
+            padding: 20px 40px;
+            font-size: 1.2rem;
+            background: #0070f3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+            #click-btn:hover {
+                background: #0059c1;
+            }
+
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #666;
+        }
+    </style>
+
 </head>
+
 <body>
-  <h1>Co‑op Clicker</h1>
-  <div id="counter">0</div>
-  <button id="click-btn">Click me!</button>
-  <footer>
-    Invite a friend to open this page and click together. Your counts will stay in sync.
-  </footer>
-  <script src="main.js"></script>
+    <h1>Co‑op Clicker</h1>
+    <div id="counter">0</div>
+    <button id="click-btn">Click me!</button>
+
+    <section id="ai-changes" style="margin-top:1rem;">
+        <h2>Ask AI to change the page</h2>
+        <form id="aiForm">
+            <input id="aiPrompt" placeholder="e.g. add confetti every 100 clicks" required style="width: min(700px, 90%);" />
+            <button id="aiSend" type="submit">Propose change</button>
+        </form>
+        <p id="aiStatus" aria-live="polite"></p>
+    </section>
+
+    <footer>
+        Invite a friend to open this page and click together. Your counts will stay in sync.
+    </footer>
+    <script src="main.js"></script>
 </body>
 </html>

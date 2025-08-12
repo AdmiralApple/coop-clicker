@@ -1,0 +1,39 @@
+name: AI change PR
+
+on:
+  repository_dispatch:
+    types: [ai-change]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  ai:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - name: Generate patch with OpenAI
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          AI_PROMPT: ${{ github.event.client_payload.prompt }}
+          AI_REQUESTER: ${{ github.event.client_payload.user }}
+        run: node scripts/ai-change.mjs
+      - name: Create PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: ai/${{ github.run_id }}
+          title: "AI: ${{ github.event.client_payload.prompt }}"
+          body: |
+            **Prompt:** `${{ github.event.client_payload.prompt }}`  
+            **Requested by:** `${{ github.event.client_payload.user }}`
+
+            This PR was generated automatically. Please review before merging.
+          commit-message: "AI change: ${{ github.event.client_payload.prompt }}"
+          delete-branch: true

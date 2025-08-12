@@ -2,9 +2,11 @@
   "name": "coop-clicker",
   "version": "1.0.0",
   "scripts": {
-    "build": "echo 'No build required'"
+    "build": "echo 'No build required'",
+    "ai:local": "node scripts/ai-change.mjs"
   },
   "dependencies": {
-    "@upstash/redis": "^1.22.2"
+    "@upstash/redis": "^1.22.2",
+    "openai": "^4.58.0"
   }
 }
