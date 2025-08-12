@@ -51,11 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // AI form handling logic
+// AI form handling logic
 (function(){
   const form = document.getElementById('aiForm');
   if (!form) return;
   const input = document.getElementById('aiPrompt');
   const status = document.getElementById('aiStatus');
+  window.__AI_SECRET = "LEONISCOOL"; // Set the AI secret
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const prompt = (input.value || '').trim();
@@ -66,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-ai-secret': (window.__AI_SECRET || '')
+          'x-ai-secret': window.__AI_SECRET
         },
         body: JSON.stringify({ prompt, user: 'friend' })
       });
