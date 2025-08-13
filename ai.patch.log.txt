@@ -1,1 +1,1 @@
-error: patch fragment without header at line 14: @@ -12,6 +13,15 @@
+error: corrupt patch at line 6
