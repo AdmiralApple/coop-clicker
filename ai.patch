@@ -1,46 +1,56 @@
 diff --git a/main.js b/main.js
-index 8c8e3f1..f3b5e1e 100644
+index 5e2c1b4..f3c2e1a 100644
 --- a/main.js
 +++ b/main.js
 @@ -1,6 +1,7 @@
- // client side logic for the cooperative clicker
+// client side logic for the cooperative clicker
  
  document.addEventListener('DOMContentLoaded', () => {
    const counterEl = document.getElementById('counter');
-+  let clickCount = 0;
-   const buttonEl = document.getElementById('click-btn');
++  const buttonEl = document.getElementById('click-btn');
+   let clickCount = 0;
  
    /**
-@@ -12,6 +13,15 @@
+@@ -6,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
+   async function fetchCount() {
+     try {
+       const response = await fetch('/api/counter');
++      if (!response.ok) {
+         throw new Error('Failed to fetch count');
+       }
+       const data = await response.json();
+@@ -19,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
    async function incrementCount() {
      try {
        const response = await fetch('/api/counter', {
-         method: 'POST'
++        method: 'POST'
        });
        if (!response.ok) {
          throw new Error('Failed to increment count');
        }
-       const data = await response.json();
-       counterEl.textContent = data.count;
-     } catch (err) {
-       console.error(err);
-     }
+@@ -30,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
+   function createConfetti() {
+     const colors = ['#FF0D72', '#0ABAB5', '#F9D423', '#FF4E50'];
+     const confetti = document.createElement('div');
++    confetti.classList.add('confetti');
+     confetti.style.position = 'absolute';
+     confetti.style.width = '10px';
+     confetti.style.height = '10px';
+@@ -39,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
+     document.body.appendChild(confetti);
+     setTimeout(() => {
+       confetti.remove();
+     }, 3000);
    }
  
-+  function createConfetti() {
-+    const confetti = document.createElement('div');
-+    confetti.className = 'confetti';
-+    document.body.appendChild(confetti);
-+    setTimeout(() => confetti.remove(), 3000);
-+  }
-+
    // Hook up button click to increment
    buttonEl.addEventListener('click', () => {
      incrementCount();
-+    clickCount++;
-+    if (clickCount % 100 === 0) {
-+      createConfetti();
-+    }
+     clickCount++;
+     if (clickCount >= 100) {
+       createConfetti();
+       clickCount = 0;
+     }
    });
  
    // Poll the server every second to update the count in case others have clicked
@@ -51,28 +61,3 @@ index 8c8e3f1..f3b5e1e 100644
  });
  
  // AI form handling logic
- // AI form handling logic
- (function(){
-diff --git a/style.css b/style.css
-new file mode 100644
---- /dev/null
-+++ b/style.css
-@@ -0,0 +1,5 @@
- body {
-+  overflow: hidden;
-+}
-+
-+.confetti {
-+  position: absolute;
-+  width: 10px;
-+  height: 10px;
-+  background: red;
-+  opacity: 0.8;
-+  animation: fall 3s forwards;
-+}
-+
-+@keyframes fall {
-+  to {
-+    transform: translateY(100vh) rotate(720deg);
-+  }
-+}

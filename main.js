@@ -1,13 +1,8 @@
-// client side logic for the cooperative clicker
-
 document.addEventListener('DOMContentLoaded', () => {
   const counterEl = document.getElementById('counter');
   const buttonEl = document.getElementById('click-btn');
   let clickCount = 0;
 
-  /**
-   * Fetch the current count from the serverless function.
-   */
   async function fetchCount() {
     try {
       const response = await fetch('/api/counter');
@@ -21,9 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  /**
-   * Increment the counter by making a POST request.
-   */
   async function incrementCount() {
     try {
       const response = await fetch('/api/counter', {
@@ -55,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 3000);
   }
 
-  // Hook up button click to increment
   buttonEl.addEventListener('click', () => {
     incrementCount();
     clickCount++;
@@ -65,20 +56,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Poll the server every second to update the count in case others have clicked
   setInterval(fetchCount, 1000);
-
-  // Immediately fetch the count when the page loads
   fetchCount();
 });
 
-// AI form handling logic
 (function(){
   const form = document.getElementById('aiForm');
   if (!form) return;
   const input = document.getElementById('aiPrompt');
   const status = document.getElementById('aiStatus');
-  window.__AI_SECRET = "LEONISCOOL"; // Set the AI secret
+  window.__AI_SECRET = "LEONISCOOL";
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const prompt = (input.value || '').trim();
